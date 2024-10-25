@@ -1,6 +1,6 @@
 {
-  "name": "Rateo",
-  "displayName": "Rateo",
+  "name": "VideoPlayer",
+  "displayName": "VideoPlayer",
   "react-native-google-mobile-ads": {
     "android_app_id": "ca-app-pub-7070097383743849~9822403407", 
     "ios_app_id": "ca-app-pub-6806642040204494~8460541659" 
