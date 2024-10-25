@@ -6,6 +6,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {BottomTabNavigatorParamList, tabBarIconType} from './types.navigation';
 import {COLORS, CustomTheme, Globaltypography} from '../theme';
 import {useTheme} from '@react-navigation/native';
+import {normalizeHeight, normalizeWidth} from '../utils/size';
 
 const Tab = createBottomTabNavigator<BottomTabNavigatorParamList>();
 
@@ -57,10 +58,10 @@ const styles = StyleSheet.create({
     ...Globaltypography.formLabel,
   },
   tabBarStyle: {
-    shadowColor: COLORS.palette.black,
+    shadowColor: COLORS.inverseColor,
     shadowOffset: {
-      width: 5,
-      height: 2,
+      width: normalizeWidth(5),
+      height: normalizeHeight(2),
     },
     shadowOpacity: 0.5,
     shadowRadius: 3.84,

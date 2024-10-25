@@ -1,4 +1,8 @@
 {
   "name": "Rateo",
-  "displayName": "Rateo"
+  "displayName": "Rateo",
+  "react-native-google-mobile-ads": {
+    "android_app_id": "ca-app-pub-7070097383743849~9822403407", // workout app id
+    "ios_app_id": "ca-app-pub-6806642040204494~8460541659"// workout app id 
+  }
 }

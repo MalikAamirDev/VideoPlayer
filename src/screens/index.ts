@@ -11,4 +11,6 @@ export {default as SignupScreen} from './SignupScreen/SignupScreen';
 export {default as ConfirmSignupScreen} from './ConfirmSignupScreen/ConfirmSignupScreen';
 export {default as SettingScreen} from './SettingScreen/SettingScreen';
 export {default as VideosScreen} from './VideosScreen/VideosScreen';
-// export {ErrorBoundary} from './ErrorBoundaryScreen/ErrorBoundary';
+export {default as SearchScreen} from './SearchScreen/SearchScreen';
+export {default as SingleFolderScreen} from './SingleFolderScreen/SingleFolderScreen';
+export {default as SingleVideoScreen} from './SingleVideoScreen/SingleVideoScreen';

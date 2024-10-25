@@ -14,4 +14,9 @@ export const SVG = {
   UserIcon: require('./user.svg').default,
   search: require('./search.svg').default,
   moreOption: require('./moreOption.svg').default,
+  videoBack: require('./videoBack.svg').default,
+  videoForward: require('./videoForward.svg').default,
+  backArrow: require('./backArrow.svg').default,
+  blackSearch: require('./blackSearch.svg').default,
+  cross: require('./cross.svg').default,
 };

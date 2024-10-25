@@ -37,6 +37,11 @@ const useStyles = () => {
       // paddingVertical: pixelSizeY(10),
       // paddingHorizontal: pixelSizeY(10),
     },
+    loadingView: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
     folderImage: {
       width: normalizeWidth(75),
       height: normalizeHeight(75),
@@ -59,6 +64,9 @@ const useStyles = () => {
       fontSize: normalizeFont(24),
       fontWeight: 'bold',
       color: colors.titleColor,
+    },
+    searchIcon: {
+      padding: 7,
     },
     folderSection: {
       marginBottom: pixelSizeY(24),

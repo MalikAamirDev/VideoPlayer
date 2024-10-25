@@ -1,41 +1,153 @@
 import {
+  Alert,
   FlatList,
   ImageBackground,
+  Share,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import useStyles from './styles';
-import {IMAGES, SVG} from '../../assets';
+import {SVG} from '../../assets';
+import {navigate} from '../../routes/navigationUtilities';
+import CameraRoll from '@react-native-community/cameraroll';
+import {useTheme} from '@react-navigation/native';
+import {CustomTheme} from '../../theme';
+import {normalizeHeight} from '../../utils/size';
 
-const VideosScreen = () => {
+const VideosScreen = ({videos}: any) => {
+  // State
   const styles = useStyles();
-  const data = [
-    0, 1, 2, 3, 45, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-  ];
+  const [isMoreOptionVisible, setIsMoreOptionVisible] = useState(
+    null as number | null,
+  );
+  const [videosData, setVideosData] = useState([]);
+  // Hook
+  const {colors} = useTheme() as CustomTheme;
+  useEffect(() => {
+    setVideosData(videos);
+  }, [videos]);
+
+  // Function
+  const addressHandler = (index: number) => {
+    setIsMoreOptionVisible(index === isMoreOptionVisible ? null : index);
+  };
+  // Delete function
+  const deleteVideo = async (uri: any, index: any) => {
+    try {
+      await CameraRoll.deletePhotos([uri]);
+      // Remove the deleted video from the list
+      setVideosData(videos.filter((_: any, i: number) => i !== index));
+      setIsMoreOptionVisible(null);
+      Alert.alert('Success', 'Video deleted successfully!');
+    } catch (error) {
+      setIsMoreOptionVisible(null);
+      console.error('Error deleting video:', error);
+      Alert.alert('Error', 'Failed to delete the video');
+    }
+  };
+
+  // Share function
+  const shareVideo = async (uri: any) => {
+    try {
+      await Share.share({
+        // message: 'Check out this video!',
+        url: uri,
+      });
+      setIsMoreOptionVisible(null);
+    } catch (error) {
+      setIsMoreOptionVisible(null);
+      console.error('Error sharing video:', error);
+    }
+  };
+
   return (
     <View style={styles.mainView}>
       <FlatList
-        data={data}
+        ListFooterComponent={() => (
+          <View style={{height: normalizeHeight(100)}} />
+        )}
+        data={videosData || []}
         showsVerticalScrollIndicator={false}
-        renderItem={() => {
+        renderItem={({item, index}: any) => {
+          console.log('imageimageeeuri', item?.image.uri);
+          const date = new Date(item?.timestamp * 1000);
+          const day = date.getDate(); // Get the day of the month
+          const month = date.toLocaleString('en-US', {month: 'long'}); // Get the full month name
+          // Display in "DD Month" format
+          const formattedDate = `${day} ${month}`;
+
+          // Function to convert file size to human-readable format
+          const formatFileSize = (bytes: number): string => {
+            const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+            if (bytes === 0) return '0 Bytes';
+            const i = Math.floor(Math.log(bytes) / Math.log(1024));
+            return (
+              parseFloat((bytes / Math.pow(1024, i)).toFixed(2)) +
+              ' ' +
+              sizes[i]
+            );
+          };
+
+          // Display the formatted file size
+          const fileSize = formatFileSize(item?.image.fileSize);
+
+          console.log('fileSize', fileSize); // Example: "35.11 MB"
+
+          // Function to format playableDuration as "0:ss"
+          const formatPlayableDuration = (duration: number): string => {
+            if (duration < 60) {
+              // Return the formatted string as "0:ss"
+              return `0:${Math.floor(duration)}`;
+            } else {
+              // Handle the case if duration is more than 60 seconds (if needed)
+              return `${Math.floor(duration / 60)}:${Math.floor(
+                duration % 60,
+              )}`;
+            }
+          };
+
           return (
-            <View style={styles.videoMainView}>
-              <ImageBackground source={IMAGES.onBoarding1} style={styles.image}>
-                <Text style={styles.durationTextStyle}>0:12</Text>
-              </ImageBackground>
-              <View style={styles.titleViewStyle}>
-                <Text numberOfLines={2} style={styles.titleStyle}>
-                  Videos path will be here Videos path will be here Videos path
-                  will
-                </Text>
-                <Text style={styles.dateStyle}>25 sept</Text>
-              </View>
-              <TouchableOpacity>
-                <SVG.moreOption />
+            <>
+              <TouchableOpacity
+                key={index}
+                onPress={() => navigate('SingleVideoScreen', {item})}
+                style={styles.videoMainView}>
+                <ImageBackground
+                  source={{uri: item?.image?.uri}}
+                  style={styles.image}>
+                  <Text style={styles.durationTextStyle}>
+                    {formatPlayableDuration(item?.image?.playableDuration)}
+                  </Text>
+                </ImageBackground>
+                <View style={styles.titleViewStyle}>
+                  <Text numberOfLines={2} style={styles.titleStyle}>
+                    {item?.image?.filename}
+                  </Text>
+                  <Text style={styles.dateStyle}>{formattedDate}</Text>
+                </View>
+                <TouchableOpacity
+                  style={styles.moreOptionView}
+                  onPress={() => addressHandler(index)}>
+                  <SVG.moreOption fill={colors.inverseColor} />
+                </TouchableOpacity>
               </TouchableOpacity>
-            </View>
+              {isMoreOptionVisible === index && (
+                <View style={styles.moreOption}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      shareVideo(item?.image?.uri);
+                    }}>
+                    <Text style={styles.moreOptionTextStyle}>Share</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => deleteVideo(item?.image?.uri, index)}>
+                    <Text style={styles.moreOptionTextStyle}>Delete</Text>
+                  </TouchableOpacity>
+                </View>
+              )}
+            </>
           );
         }}
       />

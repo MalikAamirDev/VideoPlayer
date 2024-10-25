@@ -8,25 +8,43 @@ import {
   Alert,
   SafeAreaView,
   Image,
+  ActivityIndicator,
+  useColorScheme,
+  Platform,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {request, PERMISSIONS, RESULTS, check} from 'react-native-permissions';
-import RNFS from 'react-native-fs';
-import Video from 'react-native-video';
 import {IMAGES, SVG} from '../../assets';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {FONTS} from '../../assets/fonts';
-import {COLORS} from '../../theme';
+import {CustomTheme} from '../../theme';
 import {normalizeFont} from '../../utils/size';
 import useStyles from './style';
 import VideosScreen from '../VideosScreen/VideosScreen';
-
+import {navigate} from '../../routes/navigationUtilities';
+import CameraRoll from '@react-native-community/cameraroll';
+import {useTheme} from '@react-navigation/native';
+import {
+  BannerAd,
+  BannerAdSize,
+  TestIds,
+  useForeground,
+} from 'react-native-google-mobile-ads';
+import {bannerAddKey} from '../../constants';
 const HomeScreen = () => {
-  const [videos, setVideos] = useState({});
+  // State
   const [loading, setLoading] = useState(true);
+  const [videos, setVideos] = useState([]);
   const styles = useStyles();
+  const colorScheme = useColorScheme();
+  const {colors} = useTheme() as CustomTheme;
+  // Hook
+  const bannerRef = useRef<BannerAd>(null);
+  // adds
+  useForeground(() => {
+    Platform.OS === 'ios' && bannerRef.current?.load();
+  });
   // Request File Permissions for iOS
-
   const checkAndRequestFilePermissions = async () => {
     try {
       // Check current permission status
@@ -114,53 +132,15 @@ const HomeScreen = () => {
     }
   };
 
-  //Fetch media files and organize by folder
-
-  const getDirectories = async () => {
-    try {
-      const rootPath = RNFS.DocumentDirectoryPath; // Use appropriate path for media files
-      console.log('Fetching files from path:', rootPath);
-
-      const files = await RNFS.readDir(rootPath); // Get files and directories
-      console.log('Files found:', files);
-
-      const videosByFolder = {};
-
-      files.forEach(file => {
-        const filePath = file.path;
-        const folder = filePath.split('/').slice(-2, -1)[0]; // Extract folder name
-
-        // Check if the file is a video and ends with .mp4
-        if (file.isFile() && file.name.endsWith('.mp4')) {
-          if (!videosByFolder[folder]) {
-            videosByFolder[folder] = [];
-          }
-          videosByFolder[folder].push(file);
-        }
-      });
-
-      return videosByFolder; // Return video files by folder
-    } catch (err) {
-      console.log('Error fetching directories:', err);
-      Alert.alert('Error', 'Failed to fetch video files.');
-      return {};
-    }
-  };
-
   // Fetch and set video data
   useEffect(() => {
     const initializeMedia = async () => {
-      await requestFilePermissions();
       await checkAndRequestFilePermissions();
+      await requestFilePermissions();
       setTimeout(async () => {
-        console.log('🚀 ~ initializeMedia ~ getDirectories:');
-        const fetchedVideos = await getDirectories();
-        console.log('🚀 ~ initializeMedia ~ fetchedVideos:o', fetchedVideos);
-
-        setVideos(fetchedVideos);
-      }, 5000);
-
-      setLoading(false);
+        fetchVideos();
+        setLoading(false);
+      }, 1000);
     };
 
     initializeMedia();
@@ -171,25 +151,53 @@ const HomeScreen = () => {
    */
   const Tab = createMaterialTopTabNavigator();
 
-  // const VideosScreen = () => {
-  //   return (
-  //     <View style={styles.folderSectionMain}>
-  //       <Text>VideosScreen</Text>
-  //     </View>
-  //   );
-  // };
+  // Function to fetch videos from the Photos library
+  // this function is working is fine for fetching the videos
+
+  const fetchVideos = async () => {
+    try {
+      const phoneGalleryVideos = await CameraRoll.getPhotos({
+        first: 500,
+        assetType: 'Videos', // Fetch only videos
+      });
+      setVideos(phoneGalleryVideos?.edges?.map(edge => edge.node));
+    } catch (error) {
+      console.error('Error fetching videos:', error);
+    }
+  };
+
+  // end
+
   const FolderScreen = () => {
     return (
       <View style={styles.folderSectionMain}>
-        <View style={styles.folderMain}>
-          <Image source={IMAGES.folder} style={styles.folderImage} />
-          <View style={styles.folderNameView}>
-            <Text style={styles.folderName}>FolderScreen</Text>
-            <Text style={styles.folderLength}>
-              Videos {Object.keys(videos).length}
-            </Text>
-          </View>
-        </View>
+        {loading ? (
+          <>
+            <View style={styles.loadingView}>
+              <ActivityIndicator size={'large'} color={colors.primary} />
+            </View>
+          </>
+        ) : (
+          <FlatList
+            data={[1]}
+            showsVerticalScrollIndicator={false}
+            renderItem={() => {
+              return (
+                <TouchableOpacity
+                  onPress={() => navigate('SingleFolderScreen', {videos})}
+                  style={styles.folderMain}>
+                  <Image source={IMAGES.folder} style={styles.folderImage} />
+                  <View style={styles.folderNameView}>
+                    <Text style={styles.folderName}>All Videos</Text>
+                    <Text style={styles.folderLength}>
+                      Videos {videos?.length}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              );
+            }}
+          />
+        )}
       </View>
     );
   };
@@ -197,10 +205,29 @@ const HomeScreen = () => {
     <View style={styles.mainView}>
       <SafeAreaView />
       <View style={styles.headerContainer}>
-        <Text style={styles.header}>Video Player</Text>
-        <TouchableOpacity onPress={() => {}}>
-          <SVG.search />
+        <Text onPress={() => {}} style={styles.header}>
+          Video Player
+        </Text>
+        <TouchableOpacity
+          style={styles.searchIcon}
+          onPress={() => {
+            navigate('SearchScreen', {videos});
+            console.log('🚀 ~ onPress ~ navigate ~ SearchScreen');
+          }}>
+          {colorScheme === 'light' ? <SVG.blackSearch /> : <SVG.search />}
         </TouchableOpacity>
+      </View>
+      <View
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          zIndex: 12,
+        }}>
+        <BannerAd
+          ref={bannerRef}
+          size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+          unitId={__DEV__ ? TestIds.BANNER : bannerAddKey}
+        />
       </View>
       <Tab.Navigator
         screenOptions={{
@@ -212,51 +239,21 @@ const HomeScreen = () => {
             width: '92%',
             marginBottom: 17,
             alignSelf: 'center',
-            backgroundColor: COLORS.background,
+            backgroundColor: colors.background,
           },
-          tabBarActiveTintColor: COLORS.primary,
-          tabBarInactiveTintColor: COLORS.titleColor,
+          tabBarActiveTintColor: colors.primary,
+          tabBarInactiveTintColor: colors.titleColor,
           tabBarIndicatorStyle: {
             height: '3%',
           },
         }}>
+        <Tab.Screen name="Videos">
+          {() => <VideosScreen videos={videos} />}
+        </Tab.Screen>
         <Tab.Screen name="Folder">{() => <FolderScreen />}</Tab.Screen>
-        <Tab.Screen name="Videos">{() => <VideosScreen />}</Tab.Screen>
       </Tab.Navigator>
     </View>
   );
 };
 
 export default HomeScreen;
-
-// test for media library
-
-// {Object?.keys(videos)?.length === 0 ? (
-//   <Text>No videos found.</Text>
-// ) : (
-//   <View>
-//     {Object?.keys(!videos)?.map(folder => (
-//       <View key={folder} style={styles.folderSection}>
-//         <Text style={styles.folderTitle}>{folder}</Text>
-//         {videos[folder]?.length > 0 && (
-//           <FlatList
-//             data={videos[folder]}
-//             horizontal
-//             renderItem={({item}) => (
-//               <TouchableOpacity style={styles.videoItem}>
-//                 <Video
-//                   source={{uri: item.path}}
-//                   style={styles.videoPlayer}
-//                   resizeMode="cover"
-//                   controls={true}
-//                 />
-//               </TouchableOpacity>
-//             )}
-//             keyExtractor={item => item.name}
-//             showsHorizontalScrollIndicator={false}
-//           />
-//         )}
-//       </View>
-//     ))}
-//   </View>
-// )}

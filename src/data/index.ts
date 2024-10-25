@@ -9,8 +9,11 @@ import {
   LoginScreen,
   OnBoardingScreen,
   ProfileScreen,
+  SearchScreen,
   SettingScreen,
   SignupScreen,
+  SingleFolderScreen,
+  SingleVideoScreen,
   VideosScreen,
 } from '../screens';
 import ContactScreen from '../screens/ContactScreen/ContactScreen';
@@ -75,6 +78,21 @@ export const homeScreen = [
     screenName: 'VideosScreen',
     component: VideosScreen,
   },
+  {
+    id: 4,
+    screenName: 'SearchScreen',
+    component: SearchScreen,
+  },
+  {
+    id: 5,
+    screenName: 'SingleFolderScreen',
+    component: SingleFolderScreen,
+  },
+  {
+    id: 6,
+    screenName: 'SingleVideoScreen',
+    component: SingleVideoScreen,
+  },
 ];
 
 /*
@@ -90,10 +108,10 @@ export const TabScreens = [
   },
 
   {
-    name: 'Profilescreen',
-    component: ProfileScreen,
+    name: 'SettingScreen',
+    component: SettingScreen,
     tabBarIcon: SVG.ProfileIcon,
-    tabBarLabel: en.profile,
+    tabBarLabel: en.setting,
   },
 ];
 
@@ -1850,11 +1868,33 @@ export const countriesData = [
   },
 ];
 
-export const onBoardingData = [
+export const videos = [
   {
     id: 1,
-    path: IMAGES.onBoarding1,
+    name: 'Video will be here Video will be here Video will be here ',
+    path: 'https://firebasestorage.googleapis.com/v0/b/homeworkout-5acc0.appspot.com/o/FullBodyCadio%2FfullBodyCadioIntermediate.mp4?alt=media&token=2b09517e-1985-41cf-a6d9-91e183099f74',
+    duration: '0:10',
+    date: '10/10/2020',
   },
-  {id: 2, path: IMAGES.onBoarding2},
-  {id: 3, path: IMAGES.onBoarding3},
+  {
+    id: 2,
+    name: 'Video will be here Video will be here Video will be here',
+    path: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+    duration: '0:10',
+    date: '10/10/2020',
+  },
+  {
+    id: 3,
+    name: 'Video Video will be here Video will be here Video will be here',
+    path: 'https://firebasestorage.googleapis.com/v0/b/homeworkout-5acc0.appspot.com/o/FullBodyCadio%2FfullBodyCadioIntermediate.mp4?alt=media&token=2b09517e-1985-41cf-a6d9-91e183099f74',
+    duration: '0:10',
+    date: '10/10/2020',
+  },
+  {
+    id: 4,
+    name: 'Video Video will be here Video will be here Video will be here',
+    path: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+    duration: '0:10',
+    date: '10/10/2020',
+  },
 ];

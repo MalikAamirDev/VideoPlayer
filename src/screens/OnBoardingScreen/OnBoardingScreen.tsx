@@ -35,20 +35,28 @@ export default function OnBoardingScreen(): JSX.Element {
   };
 
   return (
-    <ImageBackground source={IMAGES.onBoarding} style={$mainContainer(colors)} resizeMode={'cover'}>
+    <ImageBackground style={$mainContainer(colors)} resizeMode={'cover'}>
       <SafeAreaView />
       <FocusAwareStatusBar />
 
       {/* Logo */}
       <View style={styles.appLogoView}>
-        <Image source={IMAGES.appLogo} style={styles.appLogoImageStyle} resizeMode={'contain'} />
+        <Image
+          source={IMAGES.appLogo}
+          style={styles.appLogoImageStyle}
+          resizeMode={'contain'}
+        />
         {/* <AppImage
           source={{
             uri: 'https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg',
           }}
           maxWidth={400}
         /> */}
-        <AppText transText={'appLabel'} presetStyle={'heading'} textColor={colors.background} />
+        <AppText
+          transText={'appLabel'}
+          presetStyle={'heading'}
+          textColor={colors.background}
+        />
       </View>
 
       {/* Buttons */}

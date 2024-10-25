@@ -26,6 +26,7 @@ const en = {
   signInLabel: 'Fill out your email address and password',
   tapToProceed: 'Tap to proceed',
   email: 'Email',
+  setting: 'Setting',
   forgotPasswordsmall: 'Forgot password?',
   resendCode: 'Resend code',
   password: 'Password',
@@ -36,8 +37,10 @@ const en = {
   continue: 'Continue',
   dob: 'Date of birth',
   forgotPasswordBold: 'Forgot password',
-  forgotChangePasswordLable: 'Forgot password, please reset password, and confirm code via email.',
-  forgotPasswordLable: 'We understand you forgot your password, can you please provide your sign up email',
+  forgotChangePasswordLable:
+    'Forgot password, please reset password, and confirm code via email.',
+  forgotPasswordLable:
+    'We understand you forgot your password, can you please provide your sign up email',
   resetPassword: 'Reset Password',
   reEnterPassword: 'Re-enter new password',
   confirmationCode: 'Confirmation code',
@@ -64,7 +67,8 @@ const en = {
     firstNameInvalid: 'First Name is invalid',
     lastNameInvalid: 'Last Name is invalid',
     passwordNotMatch: 'Password does not match',
-    passwordLength: 'Invalid password it should on UpperCase, lowerCase, letter and one number',
+    passwordLength:
+      'Invalid password it should on UpperCase, lowerCase, letter and one number',
   },
 };
 

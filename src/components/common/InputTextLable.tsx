@@ -1,9 +1,17 @@
-import {StyleSheet, View, TextInput, TouchableOpacity, ViewStyle, KeyboardTypeOptions} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  TouchableOpacity,
+  ViewStyle,
+  KeyboardTypeOptions,
+} from 'react-native';
 import React, {useState} from 'react';
 import {SVG} from '../../assets';
-import {COLORS, WIDTH} from '../../theme';
+import {COLORS, CustomTheme, WIDTH} from '../../theme';
 import AppText from './AppText';
 import {TxKeyPath} from '../../i18n/types';
+import {useTheme} from '@react-navigation/native';
 
 interface inputTextLabelType {
   textLable?: TxKeyPath;
@@ -56,11 +64,19 @@ export default function InputTextLabel(props: inputTextLabelType): JSX.Element {
 
   return (
     <View style={[styles.mainContStyle, viewStyle]}>
-      <AppText transText={textLable} presetStyle={'textInputHeading'} style={textLabelStyle} />
+      {textLable && (
+        <AppText
+          transText={textLable}
+          presetStyle={'textInputHeading'}
+          style={textLabelStyle}
+        />
+      )}
 
       <View style={[styles.inputStyle2, textInputStyle]}>
         {leftIcon ? (
-          <TouchableOpacity style={styles.leftButtonStyle} onPress={leftIconPress}>
+          <TouchableOpacity
+            style={styles.leftButtonStyle}
+            onPress={leftIconPress}>
             {Array.isArray(children) ? children[0] : children}
           </TouchableOpacity>
         ) : null}
@@ -77,7 +93,9 @@ export default function InputTextLabel(props: inputTextLabelType): JSX.Element {
           autoCorrect={false}
         />
         {isPassword && (
-          <TouchableOpacity style={styles.rightButtonStyle} onPress={() => setPassSecure(!passSecure)}>
+          <TouchableOpacity
+            style={styles.rightButtonStyle}
+            onPress={() => setPassSecure(!passSecure)}>
             {passSecure ? (
               <SVG.EyeOffIcon fill={COLORS.palette.secondary500} />
             ) : (
@@ -86,7 +104,9 @@ export default function InputTextLabel(props: inputTextLabelType): JSX.Element {
           </TouchableOpacity>
         )}
         {rightIcon && !isPassword ? (
-          <TouchableOpacity style={styles.rightButtonStyle} onPress={rightIconPress}>
+          <TouchableOpacity
+            style={styles.rightButtonStyle}
+            onPress={rightIconPress}>
             {Array.isArray(children) ? children[1] : children}
           </TouchableOpacity>
         ) : null}
@@ -122,10 +142,10 @@ const styles = StyleSheet.create({
     right: 10,
     width: 50,
   },
-
   textInput2: {
     height: '100%',
     paddingLeft: 10,
     width: '95%',
+    color: COLORS.textColor,
   },
 });

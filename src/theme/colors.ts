@@ -1,5 +1,6 @@
 import {Theme} from '@react-navigation/native';
 import {Appearance} from 'react-native';
+import {invert} from 'react-native-svg/lib/typescript/elements/Shape';
 /*
  ** Default colors
  */
@@ -50,7 +51,8 @@ const defaultPalette = {
   primary: '#0093CB',
   titleColor: '#000000',
   textColor: '#000000',
-  subTitleColor: '#000000',
+  subTitleColor: '#a6a6a6',
+  inverseColor: '#000000',
 } as const;
 /*
  ** Dark Color theme
@@ -102,7 +104,8 @@ const darkPalette = {
   primary: '#0093CB',
   titleColor: '#ffffff',
   textColor: '#ffffff',
-  subTitleColor: '#ffffff',
+  subTitleColor: '#a6a6a6',
+  inverseColor: '#ffffff',
 } as const;
 
 export const DEFAULT_COLORS = {
@@ -114,6 +117,7 @@ export const DEFAULT_COLORS = {
   palette: defaultPalette,
   black: defaultPalette.black,
   white: defaultPalette.white,
+  inverseColor: defaultPalette.inverseColor,
   /*
    ** Primary color user in app
    */
@@ -299,6 +303,7 @@ export const DARK_COLORS = {
   textColor: darkPalette.textColor,
   subTitleColor: darkPalette.subTitleColor,
   titleColor: darkPalette.titleColor,
+  inverseColor: darkPalette.inverseColor,
 };
 /*
  ** Returning theme based on user theme selection
