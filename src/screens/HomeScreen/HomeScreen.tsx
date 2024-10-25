@@ -11,6 +11,7 @@ import {
   ActivityIndicator,
   useColorScheme,
   Platform,
+  StatusBar,
 } from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
 import {request, PERMISSIONS, RESULTS, check} from 'react-native-permissions';
@@ -23,18 +24,21 @@ import useStyles from './style';
 import VideosScreen from '../VideosScreen/VideosScreen';
 import {navigate} from '../../routes/navigationUtilities';
 import CameraRoll from '@react-native-community/cameraroll';
-import {useTheme} from '@react-navigation/native';
+import {useIsFocused, useTheme} from '@react-navigation/native';
 import {
+  AdEventType,
   BannerAd,
   BannerAdSize,
+  InterstitialAd,
   TestIds,
   useForeground,
 } from 'react-native-google-mobile-ads';
-import {bannerAddKey} from '../../constants';
+import {bannerAddKey, INTERTSIAL_KEY} from '../../constants';
+import {loadStorage, saveStorage} from '../../utils/storage/storage';
 const HomeScreen = () => {
   // State
   const [loading, setLoading] = useState(true);
-  const [videos, setVideos] = useState([]);
+  const videos = loadStorage('videos');
   const styles = useStyles();
   const colorScheme = useColorScheme();
   const {colors} = useTheme() as CustomTheme;
@@ -160,13 +164,88 @@ const HomeScreen = () => {
         first: 500,
         assetType: 'Videos', // Fetch only videos
       });
-      setVideos(phoneGalleryVideos?.edges?.map(edge => edge.node));
+
+      saveStorage(
+        'videos',
+        phoneGalleryVideos?.edges?.map(edge => edge.node),
+      );
     } catch (error) {
       console.error('Error fetching videos:', error);
     }
   };
 
-  // end
+  // interstitial ads
+  const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : INTERTSIAL_KEY;
+
+  const isFocus = useIsFocused();
+  const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
+    keywords: ['fashion', 'clothing', 'games', 'rewards'],
+  });
+  const [oneTimeAd, setOneTimeAd] = useState(false);
+  const [adLoaded, setAdLoaded] = useState(false);
+
+  // Load and Show Ad
+  useEffect(() => {
+    if (!oneTimeAd) {
+      console.log('Interstitial Ad not ready.');
+      const loadListener = interstitial.addAdEventListener(
+        AdEventType.LOADED,
+        () => {
+          setAdLoaded(true);
+          setOneTimeAd(true);
+          StatusBar.setHidden(true);
+          console.log('Interstitial Ad Loaded.');
+        },
+      );
+      const errorListener = interstitial.addAdEventListener(
+        AdEventType.ERROR,
+        error => {
+          console.error('Interstitial Ad failed to load:', error);
+          setAdLoaded(false);
+          StatusBar.setHidden(false);
+        },
+      );
+
+      const closeListener = interstitial.addAdEventListener(
+        AdEventType.CLOSED,
+        () => {
+          console.log('Interstitial Ad Closed.');
+          setAdLoaded(false);
+          setOneTimeAd(true);
+          StatusBar.setHidden(false);
+        },
+      );
+
+      interstitial.load();
+
+      return () => {
+        loadListener();
+        errorListener();
+        closeListener();
+      };
+    }
+  }, [interstitial, oneTimeAd]);
+
+  // Show Ad
+  useEffect(() => {
+    if (adLoaded && interstitial && !oneTimeAd) {
+      console.log('Attempting to show ad...');
+      setTimeout(() => {
+        if (adLoaded && isFocus && interstitial) {
+          interstitial.show().catch(error => {
+            console.error('Ad failed to show:', error);
+          });
+          setOneTimeAd(true);
+          setAdLoaded(false);
+          StatusBar.setHidden(true);
+        } else {
+          console.log('Ad was not loaded in time.');
+          setAdLoaded(false);
+          StatusBar.setHidden(false);
+        }
+      }, 4000);
+    }
+  }, [adLoaded, interstitial, oneTimeAd]);
 
   const FolderScreen = () => {
     return (
@@ -184,7 +263,7 @@ const HomeScreen = () => {
             renderItem={() => {
               return (
                 <TouchableOpacity
-                  onPress={() => navigate('SingleFolderScreen', {videos})}
+                  onPress={() => navigate('SingleFolderScreen')}
                   style={styles.folderMain}>
                   <Image source={IMAGES.folder} style={styles.folderImage} />
                   <View style={styles.folderNameView}>
@@ -211,21 +290,16 @@ const HomeScreen = () => {
         <TouchableOpacity
           style={styles.searchIcon}
           onPress={() => {
-            navigate('SearchScreen', {videos});
+            navigate('SearchScreen');
             console.log('🚀 ~ onPress ~ navigate ~ SearchScreen');
           }}>
           {colorScheme === 'light' ? <SVG.blackSearch /> : <SVG.search />}
         </TouchableOpacity>
       </View>
-      <View
-        style={{
-          position: 'absolute',
-          bottom: 0,
-          zIndex: 12,
-        }}>
+      <View style={styles.adsViewStyle}>
         <BannerAd
           ref={bannerRef}
-          size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+          size={BannerAdSize.FULL_BANNER}
           unitId={__DEV__ ? TestIds.BANNER : bannerAddKey}
         />
       </View>
@@ -247,9 +321,7 @@ const HomeScreen = () => {
             height: '3%',
           },
         }}>
-        <Tab.Screen name="Videos">
-          {() => <VideosScreen videos={videos} />}
-        </Tab.Screen>
+        <Tab.Screen name="Videos">{() => <VideosScreen />}</Tab.Screen>
         <Tab.Screen name="Folder">{() => <FolderScreen />}</Tab.Screen>
       </Tab.Navigator>
     </View>

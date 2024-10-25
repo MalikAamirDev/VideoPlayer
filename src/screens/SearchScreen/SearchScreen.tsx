@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 import {
   Alert,
   FlatList,
@@ -26,10 +27,10 @@ import {
 } from 'react-native-google-mobile-ads';
 import {bannerAddKey} from '../../constants';
 import {normalizeHeight} from '../../utils/size';
+import {loadStorage, saveStorage} from '../../utils/storage/storage';
 
-const SearchScreen = ({route}: any) => {
-  const initialVideosData = route?.params?.videos;
-
+const SearchScreen = () => {
+  const initialVideosData = loadStorage('videos');
   // Hook
   const styles = useStyles();
   const {colors} = useTheme() as CustomTheme;
@@ -49,7 +50,7 @@ const SearchScreen = ({route}: any) => {
   // Function to filter videos based on searchValue
   useEffect(() => {
     if (searchValue) {
-      const filteredList = initialVideosData.filter(video =>
+      const filteredList = initialVideosData?.filter(video =>
         video?.image?.filename
           ?.toLowerCase()
           .includes(searchValue.toLowerCase()),
@@ -58,7 +59,7 @@ const SearchScreen = ({route}: any) => {
     } else {
       setFilteredVideos(initialVideosData); // Reset to all videos when search is cleared
     }
-  }, [searchValue, initialVideosData]);
+  }, [searchValue]);
 
   // Function to handle showing more options
   const addressHandler = (index: number) => {
@@ -77,6 +78,7 @@ const SearchScreen = ({route}: any) => {
         onPress: () => {
           const updatedVideos = [...filteredVideos];
           updatedVideos.splice(index, 1); // Remove video at the index
+          saveStorage('videos', updatedVideos);
           setFilteredVideos(updatedVideos); // Update filtered videos list
           setIsMoreOptionVisible(null);
         },

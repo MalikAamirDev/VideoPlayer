@@ -35,6 +35,10 @@ const useStyles = () => {
       fontWeight: '700',
       width: '70%',
     },
+    searchIcon: {
+      paddingVertical: pixelSizeY(10),
+      paddingHorizontal: pixelSizeX(10),
+    },
     inputViewStyle: {
       marginLeft: pixelSizeX(10),
 
@@ -109,6 +113,13 @@ const useStyles = () => {
     moreOptionView: {
       paddingVertical: pixelSizeY(17),
       paddingHorizontal: pixelSizeX(7),
+    },
+    adViewStyle: {
+      position: 'absolute',
+      bottom: 12,
+      zIndex: 12,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
   });
 };

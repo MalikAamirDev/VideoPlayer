@@ -81,7 +81,6 @@ const useStyles = () => {
     },
     moreOptionView: {
       paddingVertical: pixelSizeY(17),
-      paddingHorizontal: pixelSizeX(7),
     },
   });
 };

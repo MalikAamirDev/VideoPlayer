@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 import {
   Alert,
   FlatList,
@@ -7,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import useStyles from './styles';
 import {SVG} from '../../assets';
 import {navigate} from '../../routes/navigationUtilities';
@@ -15,19 +16,20 @@ import CameraRoll from '@react-native-community/cameraroll';
 import {useTheme} from '@react-navigation/native';
 import {CustomTheme} from '../../theme';
 import {normalizeHeight} from '../../utils/size';
+import {loadStorage, saveStorage} from '../../utils/storage/storage';
 
-const VideosScreen = ({videos}: any) => {
+const VideosScreen = () => {
   // State
   const styles = useStyles();
   const [isMoreOptionVisible, setIsMoreOptionVisible] = useState(
     null as number | null,
   );
-  const [videosData, setVideosData] = useState([]);
+
   // Hook
+
+  const videos = loadStorage('videos');
+
   const {colors} = useTheme() as CustomTheme;
-  useEffect(() => {
-    setVideosData(videos);
-  }, [videos]);
 
   // Function
   const addressHandler = (index: number) => {
@@ -38,7 +40,10 @@ const VideosScreen = ({videos}: any) => {
     try {
       await CameraRoll.deletePhotos([uri]);
       // Remove the deleted video from the list
-      setVideosData(videos.filter((_: any, i: number) => i !== index));
+      saveStorage(
+        'videos',
+        videos?.filter((_: any, i: number) => i !== index),
+      );
       setIsMoreOptionVisible(null);
       Alert.alert('Success', 'Video deleted successfully!');
     } catch (error) {
@@ -68,7 +73,7 @@ const VideosScreen = ({videos}: any) => {
         ListFooterComponent={() => (
           <View style={{height: normalizeHeight(100)}} />
         )}
-        data={videosData || []}
+        data={videos}
         showsVerticalScrollIndicator={false}
         renderItem={({item, index}: any) => {
           console.log('imageimageeeuri', item?.image.uri);

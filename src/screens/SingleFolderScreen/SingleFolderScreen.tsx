@@ -5,6 +5,7 @@ import {
   ImageBackground,
   Platform,
   SafeAreaView,
+  StatusBar,
   Text,
   TouchableOpacity,
   useColorScheme,
@@ -16,20 +17,23 @@ import useStyles from './style';
 import {BackButton} from '../../components';
 import {navigate} from '../../routes/navigationUtilities';
 import CameraRoll from '@react-native-community/cameraroll';
-import {useTheme} from '@react-navigation/native';
+import {useIsFocused, useTheme} from '@react-navigation/native';
 import {CustomTheme} from '../../theme';
 import {
+  AdEventType,
   BannerAd,
   BannerAdSize,
+  InterstitialAd,
   TestIds,
   useForeground,
 } from 'react-native-google-mobile-ads';
-import {bannerAddKey} from '../../constants';
+import {bannerAddKey, INTERTSIAL_KEY} from '../../constants';
 import {normalizeHeight} from '../../utils/size';
+import {loadStorage, saveStorage} from '../../utils/storage/storage';
 
-const SingleFolderScreen = ({route}: any) => {
-  const videos = route?.params?.videos;
-  const [videosData, setVideosData] = useState([]);
+const SingleFolderScreen = () => {
+  const videos = loadStorage('videos');
+
   // State
   const [isMoreOptionVisible, setIsMoreOptionVisible] = useState(
     null as number | null,
@@ -37,9 +41,7 @@ const SingleFolderScreen = ({route}: any) => {
   // Hook
   const styles = useStyles();
   const colorScheme = useColorScheme();
-  useEffect(() => {
-    setVideosData(videos);
-  }, [videos]);
+
   const {colors} = useTheme() as CustomTheme;
   // Hook
   const bannerRef = useRef<BannerAd>(null);
@@ -56,7 +58,10 @@ const SingleFolderScreen = ({route}: any) => {
     try {
       await CameraRoll.deletePhotos([uri]);
       // Remove the deleted video from the list
-      setVideosData(videos.filter((_: any, i: number) => i !== index));
+      saveStorage(
+        'videos',
+        videos?.filter((_: any, i: number) => i !== index),
+      );
       setIsMoreOptionVisible(null);
       Alert.alert('Success', 'Video deleted successfully!');
     } catch (error) {
@@ -65,6 +70,79 @@ const SingleFolderScreen = ({route}: any) => {
       Alert.alert('Error', 'Failed to delete the video');
     }
   };
+
+  // interstitial ads
+  const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : INTERTSIAL_KEY;
+
+  const isFocus = useIsFocused();
+  const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
+    keywords: ['fashion', 'clothing', 'games', 'rewards'],
+  });
+  const [oneTimeAd, setOneTimeAd] = useState(false);
+  const [adLoaded, setAdLoaded] = useState(false);
+
+  // Load and Show Ad
+  useEffect(() => {
+    if (!oneTimeAd) {
+      console.log('Interstitial Ad not ready.');
+      const loadListener = interstitial.addAdEventListener(
+        AdEventType.LOADED,
+        () => {
+          setAdLoaded(true);
+          setOneTimeAd(true);
+          StatusBar.setHidden(true);
+          console.log('Interstitial Ad Loaded.');
+        },
+      );
+      const errorListener = interstitial.addAdEventListener(
+        AdEventType.ERROR,
+        error => {
+          console.error('Interstitial Ad failed to load:', error);
+          setAdLoaded(false);
+          StatusBar.setHidden(false);
+        },
+      );
+
+      const closeListener = interstitial.addAdEventListener(
+        AdEventType.CLOSED,
+        () => {
+          console.log('Interstitial Ad Closed.');
+          setAdLoaded(false);
+          setOneTimeAd(true);
+          StatusBar.setHidden(false);
+        },
+      );
+
+      interstitial.load();
+
+      return () => {
+        loadListener();
+        errorListener();
+        closeListener();
+      };
+    }
+  }, [interstitial, oneTimeAd]);
+
+  // Show Ad
+  useEffect(() => {
+    if (adLoaded && interstitial && !oneTimeAd) {
+      console.log('Attempting to show ad...');
+      setTimeout(() => {
+        if (adLoaded && isFocus && interstitial) {
+          interstitial.show().catch(error => {
+            console.error('Ad failed to show:', error);
+          });
+          setOneTimeAd(true);
+          setAdLoaded(false);
+          StatusBar.setHidden(true);
+        } else {
+          console.log('Ad was not loaded in time.');
+          setAdLoaded(false);
+          StatusBar.setHidden(false);
+        }
+      }, 5000);
+    }
+  }, [adLoaded, interstitial, oneTimeAd]);
 
   return (
     <View style={styles.mainView}>
@@ -76,6 +154,7 @@ const SingleFolderScreen = ({route}: any) => {
         />
         <Text style={styles.headerTileStyle}>All Videos</Text>
         <TouchableOpacity
+          style={styles.searchIcon}
           onPress={() => {
             navigate('SearchScreen', {videos});
           }}>
@@ -87,7 +166,7 @@ const SingleFolderScreen = ({route}: any) => {
         ListFooterComponent={() => (
           <View style={{height: normalizeHeight(100)}} />
         )}
-        data={videosData}
+        data={videos}
         showsVerticalScrollIndicator={false}
         renderItem={({item, index}: any) => {
           console.log('imageimageeeuri', item?.image.uri);
@@ -171,15 +250,10 @@ const SingleFolderScreen = ({route}: any) => {
           );
         }}
       />
-      <View
-        style={{
-          position: 'absolute',
-          bottom: 12,
-          zIndex: 12,
-        }}>
+      <View style={styles.adViewStyle}>
         <BannerAd
           ref={bannerRef}
-          size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+          size={BannerAdSize.FULL_BANNER}
           unitId={__DEV__ ? TestIds.BANNER : bannerAddKey}
         />
       </View>

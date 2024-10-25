@@ -67,6 +67,8 @@ const useStyles = () => {
     },
     searchIcon: {
       padding: 7,
+      paddingHorizontal: 10,
+      paddingVertical: 12,
     },
     folderSection: {
       marginBottom: pixelSizeY(24),
@@ -83,6 +85,14 @@ const useStyles = () => {
       width: 150,
       height: 150,
       backgroundColor: '#000',
+    },
+    adsViewStyle: {
+      position: 'absolute',
+      bottom: 0,
+      zIndex: 12,
+      width: '100%',
+      alignContent: 'center',
+      justifyContent: 'center',
     },
   });
 };
