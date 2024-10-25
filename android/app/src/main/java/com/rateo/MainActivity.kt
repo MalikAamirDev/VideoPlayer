@@ -17,7 +17,7 @@ class MainActivity : ReactActivity() {
   }
 
 
-  override fun getMainComponentName(): String = "Rateo"
+  override fun getMainComponentName(): String = "VideoPlayer"
 
   /**
    * Returns the instance of the [ReactActivityDelegate]. We use [DefaultReactActivityDelegate]
