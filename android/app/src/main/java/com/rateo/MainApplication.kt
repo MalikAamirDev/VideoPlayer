@@ -1,4 +1,4 @@
-package com.rateo
+package com.videoPlayer.pro
 
 import android.app.Application
 import com.facebook.react.PackageList

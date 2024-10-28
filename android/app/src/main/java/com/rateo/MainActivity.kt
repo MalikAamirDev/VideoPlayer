@@ -1,4 +1,4 @@
-package com.rateo
+package com.videoPlayer.pro
 
 import android.os.Bundle;
 import com.facebook.react.ReactActivity

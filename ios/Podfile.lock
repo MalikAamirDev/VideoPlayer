@@ -1362,12 +1362,12 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - react-native-safe-area-context (4.11.0):
+  - react-native-safe-area-context (4.12.0):
     - React-Core
   - react-native-simple-toast (3.3.1):
     - React-Core
     - Toast (~> 4)
-  - react-native-slider (4.5.4):
+  - react-native-slider (4.5.5):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1388,7 +1388,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - react-native-video (6.6.4):
+  - react-native-video (6.7.0):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1401,7 +1401,7 @@ PODS:
     - React-featureflags
     - React-graphics
     - React-ImageManager
-    - react-native-video/Video (= 6.6.4)
+    - react-native-video/Video (= 6.7.0)
     - React-NativeModulesApple
     - React-RCTFabric
     - React-rendererdebug
@@ -1410,7 +1410,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - react-native-video/Video (6.6.4):
+  - react-native-video/Video (6.7.0):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1717,7 +1717,7 @@ PODS:
     - Yoga
   - RNFS (2.20.0):
     - React-Core
-  - RNGestureHandler (2.20.0):
+  - RNGestureHandler (2.20.2):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1765,7 +1765,7 @@ PODS:
     - React-Core
   - RNPermissions (4.1.5):
     - React-Core
-  - RNScreens (3.34.0):
+  - RNScreens (3.35.0):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1787,7 +1787,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNShare (11.0.3):
+  - RNShare (11.0.4):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1808,7 +1808,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNSVG (15.7.1):
+  - RNSVG (15.8.0):
     - React-Core
   - SocketRocket (0.7.0)
   - Toast (4.1.1)
@@ -2144,10 +2144,10 @@ SPEC CHECKSUMS:
   react-native-mmkv: 7d0b6c2a79e73100b933f2947a9c8741d664e18b
   react-native-orientation-locker: 5819fd23ca89cbac0d736fb4314745f62716d517
   react-native-pager-view: c476f76d54f946df5147645e902d3d7173688187
-  react-native-safe-area-context: 851c62c48dce80ccaa5637b6aa5991a1bc36eca9
+  react-native-safe-area-context: 142fade490cbebbe428640b8cbdb09daf17e8191
   react-native-simple-toast: 1f1cc551d419bc0ab05dcb0136554006c274789d
-  react-native-slider: caf709802c97955d1dc369fc2ca6250f18bd58fb
-  react-native-video: 155a792d16b64f1fb68b1795d805808f34e60488
+  react-native-slider: 4a0f3386a38fc3d2d955efc515aef7096f7d1ee4
+  react-native-video: 9aec95eecb1c523b67e71a44032935f77f926276
   react-native-volume-manager: 3c7d8047841b6831730dea7bf25250522388b4f4
   React-nativeconfig: 8c83d992b9cc7d75b5abe262069eaeea4349f794
   React-NativeModulesApple: 9f7920224a3b0c7d04d77990067ded14cee3c614
@@ -2177,17 +2177,17 @@ SPEC CHECKSUMS:
   ReactCommon: 6a952e50c2a4b694731d7682aaa6c79bc156e4ad
   RNFlashList: 115dd44377580761bff386a0caebf165424cf16f
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
-  RNGestureHandler: 6dfe7692a191ee224748964127114edf057a1475
+  RNGestureHandler: 511250b190a284388f9dd0d2e56c1df76f14cfb8
   RNGoogleMobileAds: b8bedba3b7accb437585f07413a4a530aac96cd8
   RNLocalize: 4f22418187ecd5ca693231093ff1d912d1b3c9bc
   RNPermissions: c11449feba2407d8165f6540130b1d17d512fad6
-  RNScreens: 19719a9c326e925498ac3b2d35c4e50fe87afc06
-  RNShare: e655d9afb56a76d46022eb2e33f9d3240bdbbe45
-  RNSVG: 4590aa95758149fa27c5c83e54a6a466349a1688
+  RNScreens: c7ceced6a8384cb9be5e7a5e88e9e714401fd958
+  RNShare: eaeb5e7dc1618d19db6234da1af91fc60dd6bc0f
+  RNSVG: 8b1a777d54096b8c2a0fd38fc9d5a454332bbb4d
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
   Toast: 1f5ea13423a1e6674c4abdac5be53587ae481c4e
   Yoga: 055f92ad73f8c8600a93f0e25ac0b2344c3b07e6
 
-PODFILE CHECKSUM: 7986a7adf2ed7b26c38c8255f3bbe251d0172039
+PODFILE CHECKSUM: c201361f23f2497cf65e09d6fa49006aba0bfd67
 
 COCOAPODS: 1.14.3
