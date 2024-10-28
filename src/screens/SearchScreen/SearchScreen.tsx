@@ -28,6 +28,7 @@ import {
 import {bannerAddKey} from '../../constants';
 import {normalizeHeight} from '../../utils/size';
 import {loadStorage, saveStorage} from '../../utils/storage/storage';
+import CameraRoll from '@react-native-community/cameraroll';
 
 const SearchScreen = () => {
   const initialVideosData = loadStorage('videos');
@@ -67,7 +68,7 @@ const SearchScreen = () => {
   };
 
   // Function to handle deleting a video
-  const handleDelete = (index: number) => {
+  const handleDelete = (index: number, item: any) => {
     Alert.alert('Delete Video', 'Are you sure you want to delete this video?', [
       {
         text: 'Cancel',
@@ -75,7 +76,8 @@ const SearchScreen = () => {
       },
       {
         text: 'Delete',
-        onPress: () => {
+        onPress: async () => {
+          await CameraRoll.deletePhotos([item?.image?.uri]);
           const updatedVideos = [...filteredVideos];
           updatedVideos.splice(index, 1); // Remove video at the index
           saveStorage('videos', updatedVideos);
@@ -197,7 +199,7 @@ const SearchScreen = () => {
                   <TouchableOpacity onPress={() => handleShare(item)}>
                     <Text style={styles.moreOptionTextStyle}>Share</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={() => handleDelete(index)}>
+                  <TouchableOpacity onPress={() => handleDelete(index, item)}>
                     <Text style={styles.moreOptionTextStyle}>Delete</Text>
                   </TouchableOpacity>
                   {/* <TouchableOpacity onPress={() => navigate('')}>
@@ -209,12 +211,7 @@ const SearchScreen = () => {
           );
         }}
       />
-      <View
-        style={{
-          position: 'absolute',
-          bottom: 12,
-          zIndex: 12,
-        }}>
+      <View style={styles.bannerView}>
         <BannerAd
           ref={bannerRef}
           size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}

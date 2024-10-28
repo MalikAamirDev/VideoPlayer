@@ -100,6 +100,11 @@ const useStyles = () => {
       paddingVertical: pixelSizeY(17),
       paddingHorizontal: pixelSizeX(7),
     },
+    bannerView: {
+      position: 'absolute',
+      bottom: 12,
+      zIndex: 12,
+    },
   });
 };
 

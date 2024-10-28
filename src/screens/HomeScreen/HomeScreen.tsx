@@ -38,11 +38,13 @@ import {loadStorage, saveStorage} from '../../utils/storage/storage';
 const HomeScreen = () => {
   // State
   const [loading, setLoading] = useState(true);
+  const [isPermissionGranted, setIsPermissionGranted] = useState(true);
   const videos = loadStorage('videos');
   const styles = useStyles();
   const colorScheme = useColorScheme();
   const {colors} = useTheme() as CustomTheme;
   // Hook
+
   const bannerRef = useRef<BannerAd>(null);
   // adds
   useForeground(() => {
@@ -56,16 +58,19 @@ const HomeScreen = () => {
 
       switch (currentStatus) {
         case RESULTS.GRANTED:
+          setIsPermissionGranted(true);
           console.log('Media Library permission already granted.');
           return true; // Permission already granted
 
         case RESULTS.DENIED:
+          setIsPermissionGranted(false);
           console.log(
             'Media Library permission denied. Requesting permission...',
           );
           return await requestFilePermissions(); // Request permission again
 
         case RESULTS.BLOCKED:
+          setIsPermissionGranted(false);
           Alert.alert(
             'Permission Blocked',
             'Media Library access is blocked. Please go to settings to enable it.',
@@ -73,6 +78,7 @@ const HomeScreen = () => {
           return false; // Blocked, user needs to enable it manually
 
         case RESULTS.LIMITED:
+          setIsPermissionGranted(true);
           Alert.alert(
             'Limited Permission',
             'Media Library access is limited. Some features may not work correctly. Please enable full access in settings.',
@@ -98,24 +104,27 @@ const HomeScreen = () => {
     try {
       // Request media library permission
       const result = await request(PERMISSIONS.IOS.MEDIA_LIBRARY);
-
       switch (result) {
         case RESULTS.GRANTED:
+          setIsPermissionGranted(true);
           console.log('Media Library permission granted.');
           return true;
         case RESULTS.DENIED:
+          setIsPermissionGranted(false);
           Alert.alert(
             'Permission Denied',
             'You have denied media library access. You will need to enable it in settings.',
           );
           return false;
         case RESULTS.BLOCKED:
+          setIsPermissionGranted(false);
           Alert.alert(
             'Permission Blocked',
             'Media Library access has been blocked. Please enable it in settings.',
           );
           return false;
         case RESULTS.LIMITED:
+          setIsPermissionGranted(true);
           Alert.alert(
             'Limited Permission',
             'Media Library access is limited. Some features may not work fully.',
@@ -228,10 +237,10 @@ const HomeScreen = () => {
 
   // Show Ad
   useEffect(() => {
-    if (adLoaded && interstitial && !oneTimeAd) {
+    if (adLoaded && interstitial && !oneTimeAd && isPermissionGranted) {
       console.log('Attempting to show ad...');
       setTimeout(() => {
-        if (adLoaded && isFocus && interstitial) {
+        if (adLoaded && interstitial) {
           interstitial.show().catch(error => {
             console.error('Ad failed to show:', error);
           });
@@ -245,7 +254,7 @@ const HomeScreen = () => {
         }
       }, 4000);
     }
-  }, [adLoaded, interstitial, oneTimeAd]);
+  }, [adLoaded, interstitial, oneTimeAd, isPermissionGranted]);
 
   const FolderScreen = () => {
     return (
