@@ -10,7 +10,6 @@
 node_require('react-native/scripts/react_native_pods.rb')
  node_require('react-native-permissions/scripts/setup.rb')
 
-pod 'RNFS', :path => '../node_modules/react-native-fs'
 platform :ios, min_ios_version_supported
 prepare_react_native_project!
 

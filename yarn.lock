@@ -2231,16 +2231,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-community/geolocation@npm:^3.4.0":
-  version: 3.4.0
-  resolution: "@react-native-community/geolocation@npm:3.4.0"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 4a1a334de5b8345ee5ca9af987718a4cdd0b401b6d024268330c98736eccd0bebf45fd1d4cb396558f429a4670e5b29da0b5b7ebd4e51ca12972d4b08b55d4bc
-  languageName: node
-  linkType: hard
-
 "@react-native-community/slider@npm:^4.5.4":
   version: 4.5.5
   resolution: "@react-native-community/slider@npm:4.5.5"
@@ -2582,30 +2572,6 @@ __metadata:
   dependencies:
     nanoid: ^3.1.23
   checksum: 3a3392ce095d6a2bd2aad69856f513b35774f943a3dc73d8ffb75127de6773203e3264188d87058bdea4c0c9a7d43ed28d0cbf3a1f1cdc086df3ee255d8e1e27
-  languageName: node
-  linkType: hard
-
-"@reeq/react-native-device-brightness@npm:^1.0.6":
-  version: 1.0.6
-  resolution: "@reeq/react-native-device-brightness@npm:1.0.6"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: d427a6ce2c55c5803a5afd802cd5bf478abbd4c0adac7445f17ea514fe39b56913b7c673d5504877a1d555e5fa3479316a29582793f757041b21c9b5f882e5f6
-  languageName: node
-  linkType: hard
-
-"@shopify/flash-list@npm:^1.7.1":
-  version: 1.7.1
-  resolution: "@shopify/flash-list@npm:1.7.1"
-  dependencies:
-    recyclerlistview: 4.2.1
-    tslib: 2.6.3
-  peerDependencies:
-    "@babel/runtime": "*"
-    react: "*"
-    react-native: "*"
-  checksum: 82235ac12043dd9da0bc58ab4be76d01f0496f6c769167f5139854278c5a680154d745e5226b0176cd28d1d2351fd9d3f484ed35c44c3b6ee18dbcb075826451
   languageName: node
   linkType: hard
 
@@ -3766,13 +3732,6 @@ __metadata:
   version: 1.0.2
   resolution: "balanced-match@npm:1.0.2"
   checksum: 9706c088a283058a8a99e0bf91b0a2f75497f185980d9ffa8b304de1d9e58ebda7c72c07ebf01dadedaac5b2907b2c6f566f660d62bd336c3468e960403b9d65
-  languageName: node
-  linkType: hard
-
-"base-64@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "base-64@npm:0.1.0"
-  checksum: 5a42938f82372ab5392cbacc85a5a78115cbbd9dbef9f7540fa47d78763a3a8bd7d598475f0d92341f66285afd377509851a9bb5c67bbecb89686e9255d5b3eb
   languageName: node
   linkType: hard
 
@@ -7223,7 +7182,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash.debounce@npm:4.0.8, lodash.debounce@npm:^4.0.8":
+"lodash.debounce@npm:^4.0.8":
   version: 4.0.8
   resolution: "lodash.debounce@npm:4.0.8"
   checksum: a3f527d22c548f43ae31c861ada88b2637eb48ac6aa3eb56e82d44917971b8aa96fbb37aa60efea674dc4ee8c42074f90f7b1f772e9db375435f6c83a19b3bc6
@@ -7251,7 +7210,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:^4.17.15, lodash@npm:^4.17.21":
+"lodash@npm:^4.17.21":
   version: 4.17.21
   resolution: "lodash@npm:4.17.21"
   checksum: eb835a2e51d381e561e508ce932ea50a8e5a68f4ebdd771ea240d3048244a8d13658acbd502cd4829768c56f2e16bdd4340b9ea141297d472517b83868e677f7
@@ -8500,7 +8459,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:15.8.1, prop-types@npm:^15.7.2, prop-types@npm:^15.7.x, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.7.2, prop-types@npm:^15.7.x, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -8632,16 +8591,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-brightness@npm:^1.0.3":
-  version: 1.0.3
-  resolution: "react-native-brightness@npm:1.0.3"
-  peerDependencies:
-    react: ^16.8.1
-    react-native: ">=0.59.0-rc.0 <1.0.x"
-  checksum: b174aa608f1cb794b7db1617e41ae6e58e13ff6315f2361d02516ac9672e4e36a1b479b5d07d6c8cd634e049367c27c8bc98dd4c57dcabac0cb42fac71dacee1
-  languageName: node
-  linkType: hard
-
 "react-native-communications@npm:^2.2.1":
   version: 2.2.1
   resolution: "react-native-communications@npm:2.2.1"
@@ -8698,22 +8647,6 @@ __metadata:
   peerDependencies:
     "@babel/runtime": ^7.20.6
   checksum: 3ebac2c2ed79dd7e4920fd3fc2da9187413b7190231618e4858b46c47833677838b96d531afe7bd5c4b0a60454dba40cb8708722210df5d522e30aefbf41da05
-  languageName: node
-  linkType: hard
-
-"react-native-fs@npm:^2.20.0":
-  version: 2.20.0
-  resolution: "react-native-fs@npm:2.20.0"
-  dependencies:
-    base-64: ^0.1.0
-    utf8: ^3.0.0
-  peerDependencies:
-    react-native: "*"
-    react-native-windows: "*"
-  peerDependenciesMeta:
-    react-native-windows:
-      optional: true
-  checksum: 0be9bb9a5c13b501d0a3006efc3aa5c0b5b211456ee04718297f4e522532f3527f1daa220bd67d3b82d819ed8fdab8f64b7d6e0d7b768c1fd1d8ec9122d94316
   languageName: node
   linkType: hard
 
@@ -8862,16 +8795,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-pager-view@npm:^6.4.1":
-  version: 6.4.1
-  resolution: "react-native-pager-view@npm:6.4.1"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 558f08efccf748eed91a2a88be4f90e49e2b63a28c1b9db5de9711eb324a75e9565a3dbf92c523a623a2c7d5a7e0d8a0db88599bc85d33158544a7d0e724319e
-  languageName: node
-  linkType: hard
-
 "react-native-parsed-text@npm:^0.0.22":
   version: 0.0.22
   resolution: "react-native-parsed-text@npm:0.0.22"
@@ -8895,18 +8818,6 @@ __metadata:
     react-native-windows:
       optional: true
   checksum: dc4b366a0f561a47f032c027eb703a2be45e801788b915ed583e38f617eea23656eb63a77b17fb3a663fe3199b2ec25788f799e751421634e35a64f5258feed9
-  languageName: node
-  linkType: hard
-
-"react-native-ratings@npm:^8.1.0":
-  version: 8.1.0
-  resolution: "react-native-ratings@npm:8.1.0"
-  dependencies:
-    lodash: ^4.17.15
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 34aa4e7ff09e537d5c8fb5b5bc98470c0723d7c0fff8954e39de371cdfa5ae3aa4af636ea44d508751f5dcaca6f80ee363fffd9c34a1bd8d8f7a9d8a23d82d15
   languageName: node
   linkType: hard
 
@@ -9006,23 +8917,6 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: ad8b321ef5ac078fededcafa63d7a21fada7c13ecaf34cd795058868ef386791347ba3e5b6f320aa7ab6bf95bcb0b3958cfca540a0675c8c57fdeaf2e828b1cf
-  languageName: node
-  linkType: hard
-
-"react-native-volume-manager@npm:^1.10.0":
-  version: 1.10.0
-  resolution: "react-native-volume-manager@npm:1.10.0"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: cfa876f99500f5f5e8a71c8a4f09b45bfbb80e5708d92d0a5c87dcd6388b8c1d9cb3759382d287bfc4ece39d1a056a87b132a8c9d7aa24c80b5e0437e2994c78
-  languageName: node
-  linkType: hard
-
-"react-native-volume@npm:^0.0.1":
-  version: 0.0.1
-  resolution: "react-native-volume@npm:0.0.1"
-  checksum: 67a9f7862fddb7f99847bd586ed22d7e6968b2ea23a7c6deaedad54b81c1b105d678002115e8b6e0ecfb7fd530508dba0bfa5137c3ec6f706b0e290a2c579a24
   languageName: node
   linkType: hard
 
@@ -9164,20 +9058,6 @@ __metadata:
     source-map: ~0.6.1
     tslib: ^2.0.1
   checksum: 03cc7f57562238ba258d468be67bf7446ce7a707bc87a087891dad15afead46c36e9aaeedf2130e2ab5a465244a9c62bfd4127849761cf8f4085abe2f3e5f485
-  languageName: node
-  linkType: hard
-
-"recyclerlistview@npm:4.2.1":
-  version: 4.2.1
-  resolution: "recyclerlistview@npm:4.2.1"
-  dependencies:
-    lodash.debounce: 4.0.8
-    prop-types: 15.8.1
-    ts-object-utils: 0.0.5
-  peerDependencies:
-    react: ">= 15.2.1"
-    react-native: ">= 0.30.0"
-  checksum: 48e84937f803ac2acb510b2bc36b3ef1ea9c5383540a832f80c87d7e7f933b26c59e4ffc2d7de529be55e14a8d551c4f6660a450ad220142f351e6bf6e630450
   languageName: node
   linkType: hard
 
@@ -10223,20 +10103,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-object-utils@npm:0.0.5":
-  version: 0.0.5
-  resolution: "ts-object-utils@npm:0.0.5"
-  checksum: 83c48fbdaba392fb2c01cea53b267ed5538d2bb44fc6c3eecc10bcfabc1780bfa6ec8569b52bbf0140d9b521d9049d5f15884e12286918244d463d854dbc73cb
-  languageName: node
-  linkType: hard
-
-"tslib@npm:2.6.3":
-  version: 2.6.3
-  resolution: "tslib@npm:2.6.3"
-  checksum: 74fce0e100f1ebd95b8995fbbd0e6c91bdd8f4c35c00d4da62e285a3363aaa534de40a80db30ecfd388ed7c313c42d930ee0eaf108e8114214b180eec3dbe6f5
-  languageName: node
-  linkType: hard
-
 "tslib@npm:^1.8.1":
   version: 1.14.1
   resolution: "tslib@npm:1.14.1"
@@ -10515,13 +10381,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"utf8@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "utf8@npm:3.0.0"
-  checksum: cb89a69ad9ab393e3eae9b25305b3ff08bebca9adc839191a34f90777eb2942f86a96369d2839925fea58f8f722f7e27031d697f10f5f39690f8c5047303e62d
-  languageName: node
-  linkType: hard
-
 "util-deprecate@npm:^1.0.1, util-deprecate@npm:~1.0.1":
   version: 1.0.2
   resolution: "util-deprecate@npm:1.0.2"
@@ -10571,7 +10430,6 @@ __metadata:
     "@babel/preset-env": ^7.20.0
     "@babel/runtime": ^7.20.0
     "@react-native-community/cameraroll": ^4.1.2
-    "@react-native-community/geolocation": ^3.4.0
     "@react-native-community/slider": ^4.5.4
     "@react-native/babel-preset": 0.75.4
     "@react-native/eslint-config": 0.75.4
@@ -10581,8 +10439,6 @@ __metadata:
     "@react-navigation/material-top-tabs": ^6.6.14
     "@react-navigation/native": ^6.1.18
     "@react-navigation/native-stack": ^6.11.0
-    "@reeq/react-native-device-brightness": ^1.0.6
-    "@shopify/flash-list": ^1.7.1
     "@tanstack/eslint-plugin-query": ^5.58.1
     "@tanstack/react-query": ^5.59.0
     "@types/react": ^18.2.6
@@ -10598,12 +10454,10 @@ __metadata:
     react: 18.3.1
     react-i18next: ^15.0.2
     react-native: 0.75.4
-    react-native-brightness: ^1.0.3
     react-native-confirmation-code-field: ^7.4.0
     react-native-date-picker: ^5.0.7
     react-native-document-picker: ^9.3.1
     react-native-dotenv: ^3.4.11
-    react-native-fs: ^2.20.0
     react-native-gesture-handler: ^2.20.0
     react-native-gifted-chat: ^2.6.4
     react-native-google-mobile-ads: ^14.2.5
@@ -10613,9 +10467,7 @@ __metadata:
     react-native-media-library: ^0.0.1
     react-native-mmkv: ^2.12.2
     react-native-orientation-locker: ^1.7.0
-    react-native-pager-view: ^6.4.1
     react-native-permissions: ^4.1.5
-    react-native-ratings: ^8.1.0
     react-native-safe-area-context: ^4.11.0
     react-native-screens: ^3.34.0
     react-native-share: ^11.0.3
@@ -10625,8 +10477,6 @@ __metadata:
     react-native-system-setting: ^1.7.6
     react-native-tab-view: ^3.5.2
     react-native-video: ^6.6.4
-    react-native-volume: ^0.0.1
-    react-native-volume-manager: ^1.10.0
     react-test-renderer: 18.3.1
     rn-vertical-slider-matyno: ^1.0.1
     typescript: 5.0.4

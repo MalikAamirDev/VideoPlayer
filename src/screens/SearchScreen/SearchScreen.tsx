@@ -43,7 +43,7 @@ const SearchScreen = () => {
   });
   // State
   const [searchValue, setSearchValue] = useState<string>('');
-  const [filteredVideos, setFilteredVideos] = useState(initialVideosData); // State for filtered videos
+  const [filteredVideos, setFilteredVideos] = useState(null); // State for filtered videos
   const [isMoreOptionVisible, setIsMoreOptionVisible] = useState<number | null>(
     null,
   );
