@@ -1,11 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {
-  normalizeFont,
-  normalizeHeight,
-  normalizeWidth,
-  pixelSizeX,
-  pixelSizeY,
-} from '../../utils/size';
+import {pixelSizeY} from '../../utils/size';
 import {useTheme} from '@react-navigation/native';
 import {CustomTheme} from '../../theme';
 
